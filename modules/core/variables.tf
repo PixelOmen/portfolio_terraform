@@ -12,3 +12,8 @@ variable "core_prefix" {
   type        = string
   description = "The prefix to apply to all resources"
 }
+
+variable "core_env_filename" {
+  type        = string
+  description = "The name of the environment file"
+}
