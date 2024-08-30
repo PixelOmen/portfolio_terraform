@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "cf_distro" {
   enabled             = true
   retain_on_delete    = true
   comment             = "${var.prefix}-${var.environment}-cf-distro"
-  aliases             = var.cf_alies
+  aliases             = var.cf_aliases
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
 
@@ -108,7 +108,7 @@ resource "aws_cloudfront_distribution" "cf_distro" {
   default_cache_behavior {
     compress = true
 
-    cache_policy_id  = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    cache_policy_id  = "658327ea-f89d-4fab-a63d-7e88639e58f6" # AWS managed cache policy - CachingOptimized
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.static_origin_id
@@ -117,6 +117,38 @@ resource "aws_cloudfront_distribution" "cf_distro" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+  }
+
+  ordered_cache_behavior {
+    path_pattern = "/api/*"
+
+    cache_policy_id  = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # AWS managed cache policy - CachingDisabled
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.alb_origin_id
+
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  ordered_cache_behavior {
+    path_pattern = "/socialauth/*"
+
+    cache_policy_id  = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # AWS managed cache policy - CachingDisabled
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.alb_origin_id
+
+    viewer_protocol_policy = "redirect-to-https"
+  }
+  ordered_cache_behavior {
+    path_pattern = "/backdoor/*"
+
+    cache_policy_id  = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # AWS managed cache policy - CachingDisabled
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.alb_origin_id
+
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   restrictions {

@@ -18,12 +18,22 @@ variable "core_env_filename" {
   description = "The name of the environment file"
 }
 
-variable "core_cf_alies" {
+variable "core_cf_aliases" {
   type        = list(string)
   description = "The aliases to apply to the CloudFront distribution"
 }
 
-variable "core_cf_acm_cert_arn" {
+variable "core_ssl_cert_path_body" {
   type        = string
-  description = "The ARN of the ACM certificate to use for the CloudFront distribution"
+  description = "The path to the SSL certificate body"
+}
+
+variable "core_ssl_cert_path_private_key" {
+  type        = string
+  description = "The path to the SSL certificate private key"
+}
+
+variable "core_ssl_cert_path_chain" {
+  type        = string
+  description = "The path to the SSL certificate chain"
 }

@@ -8,7 +8,7 @@ variable "prefix" {
   description = "The prefix to apply to all resources"
 }
 
-variable "cf_alies" {
+variable "cf_aliases" {
   type        = list(string)
   description = "The aliases to apply to the CloudFront distribution"
 }
