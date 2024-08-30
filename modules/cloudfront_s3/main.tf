@@ -1,15 +1,11 @@
 locals {
-  env_bucket    = "${var.prefix}-env-bucket-${var.environment}"
-  media_bucket  = "${var.prefix}-media-bucket-${var.environment}"
-  static_bucket = "${var.prefix}-staticfiles-bucket-${var.environment}"
-}
-
-locals {
-  media_origin_id  = "${locals.media_bucket}-origin"
-  static_origin_id = "${locals.static_bucket}-origin"
+  env_bucket       = "${var.prefix}-env-bucket-${var.environment}"
+  media_bucket     = "${var.prefix}-media-bucket-${var.environment}"
+  static_bucket    = "${var.prefix}-staticfiles-bucket-${var.environment}"
+  media_origin_id  = "${var.prefix}-media-bucket-${var.environment}-origin"
+  static_origin_id = "${var.prefix}-staticfiles-bucket-${var.environment}-origin"
   alb_origin_id    = "${var.prefix}-alb-${var.environment}-origin"
 }
-
 resource "aws_s3_bucket" "env_bucket" {
   bucket        = local.env_bucket
   force_destroy = true
@@ -45,6 +41,8 @@ resource "aws_cloudfront_origin_access_control" "media_oac" {
   signing_protocol                  = "sigv4"
   signing_behavior                  = "always"
   origin_access_control_origin_type = "s3"
+
+  depends_on = [aws_s3_bucket.media_bucket]
 }
 
 resource "aws_cloudfront_origin_access_control" "staticfiles_oac" {
@@ -52,7 +50,18 @@ resource "aws_cloudfront_origin_access_control" "staticfiles_oac" {
   signing_protocol                  = "sigv4"
   signing_behavior                  = "always"
   origin_access_control_origin_type = "s3"
+
+  depends_on = [aws_s3_bucket.staticfiles_bucket]
 }
+
+# resource "aws_cloudfront_origin_access_control" "alb_oac" {
+#   name                              = "${var.prefix}-alb-oac-${var.environment}"
+#   signing_protocol                  = "sigv4"
+#   signing_behavior                  = "always"
+#   origin_access_control_origin_type = "custom"
+
+#   depends_on = 
+# }
 
 resource "aws_cloudfront_distribution" "cf_distro" {
   enabled             = true

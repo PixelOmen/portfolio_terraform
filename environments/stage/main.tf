@@ -9,4 +9,9 @@ module "core_infra" {
   core_ssl_cert_path_body        = "../../certs/body.cert.pem"
   core_ssl_cert_path_private_key = "../../certs/private.key.pem"
   core_ssl_cert_path_chain       = "../../certs/chain.crt"
+
+  providers = {
+    aws             = aws
+    aws.global_east = aws.global_east
+  }
 }

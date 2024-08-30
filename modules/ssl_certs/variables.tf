@@ -1,3 +1,8 @@
+variable "environment" {
+  type        = string
+  description = "The target environment"
+}
+
 variable "ssl_cert_path_body" {
   type        = string
   description = "The path to the SSL certificate body"
