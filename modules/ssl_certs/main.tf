@@ -6,6 +6,7 @@ resource "aws_acm_certificate" "acm_cf_cert" {
   certificate_chain = file(var.ssl_cert_path_chain)
 
   tags = {
+    Name        = "${var.prefix}-cf-cert-${var.environment}"
     Environment = var.environment
   }
 }
@@ -16,6 +17,7 @@ resource "aws_acm_certificate" "acm_alb_cert" {
   certificate_chain = file(var.ssl_cert_path_chain)
 
   tags = {
+    Name        = "${var.prefix}-alb-cert-${var.environment}"
     Environment = var.environment
   }
 }

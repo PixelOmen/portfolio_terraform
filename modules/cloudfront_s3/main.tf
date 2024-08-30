@@ -41,8 +41,6 @@ resource "aws_cloudfront_origin_access_control" "media_oac" {
   signing_protocol                  = "sigv4"
   signing_behavior                  = "always"
   origin_access_control_origin_type = "s3"
-
-  depends_on = [aws_s3_bucket.media_bucket]
 }
 
 resource "aws_cloudfront_origin_access_control" "staticfiles_oac" {
@@ -50,18 +48,7 @@ resource "aws_cloudfront_origin_access_control" "staticfiles_oac" {
   signing_protocol                  = "sigv4"
   signing_behavior                  = "always"
   origin_access_control_origin_type = "s3"
-
-  depends_on = [aws_s3_bucket.staticfiles_bucket]
 }
-
-# resource "aws_cloudfront_origin_access_control" "alb_oac" {
-#   name                              = "${var.prefix}-alb-oac-${var.environment}"
-#   signing_protocol                  = "sigv4"
-#   signing_behavior                  = "always"
-#   origin_access_control_origin_type = "custom"
-
-#   depends_on = 
-# }
 
 resource "aws_cloudfront_distribution" "cf_distro" {
   enabled             = true
@@ -89,16 +76,21 @@ resource "aws_cloudfront_distribution" "cf_distro" {
     origin_id                = local.media_origin_id
   }
 
-  # origin {
-  #   domain                   = var.alb_dns_name
-  #   origin_id                = local.alb_origin_id
-  #   custom_origin_config {
-  #     http_port              = 80
-  #     https_port             = 443
-  #     origin_protocol_policy = "https-only"
-  #     origin_ssl_protocols   = ["TLSv1.2"]
-  #   }
-  # }
+  origin {
+    domain_name = var.alb_dns_name
+    origin_id   = local.alb_origin_id
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+
+    custom_header {
+      name  = var.custom_header_name
+      value = var.custom_header_value
+    }
+  }
 
   custom_error_response {
     error_caching_min_ttl = 10

@@ -1,3 +1,8 @@
+variable "core_prefix" {
+  type        = string
+  description = "The prefix to apply to all resources"
+}
+
 variable "core_environment" {
   type        = string
   description = "The target environment"
@@ -6,11 +11,6 @@ variable "core_environment" {
 variable "core_aws_region" {
   type        = string
   description = "The AWS region to deploy to"
-}
-
-variable "core_prefix" {
-  type        = string
-  description = "The prefix to apply to all resources"
 }
 
 variable "core_env_filename" {
@@ -36,4 +36,14 @@ variable "core_ssl_cert_path_private_key" {
 variable "core_ssl_cert_path_chain" {
   type        = string
   description = "The path to the SSL certificate chain"
+}
+
+variable "core_custom_cf_header_name" {
+  type        = string
+  description = "The name of the custom header cloudfront header"
+}
+
+variable "core_custom_cf_header_value" {
+  type        = string
+  description = "The value of the custom header cloudfront header"
 }
