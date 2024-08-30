@@ -17,3 +17,13 @@ variable "core_env_filename" {
   type        = string
   description = "The name of the environment file"
 }
+
+variable "core_cf_alies" {
+  type        = list(string)
+  description = "The aliases to apply to the CloudFront distribution"
+}
+
+variable "core_cf_acm_cert_arn" {
+  type        = string
+  description = "The ARN of the ACM certificate to use for the CloudFront distribution"
+}
