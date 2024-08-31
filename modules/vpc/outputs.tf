@@ -1,5 +1,5 @@
-output "stage_vpc" {
-  value = aws_vpc.stage_vpc
+output "main_vpc" {
+  value = aws_vpc.main_vpc
 }
 
 output "public_subnet_ids" {

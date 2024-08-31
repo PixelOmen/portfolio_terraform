@@ -8,7 +8,7 @@ variable "environment" {
   description = "The target environment"
 }
 
-variable "aws_region" {
+variable "vpc_id" {
   type        = string
-  description = "The AWS region to deploy to"
+  description = "The VPC ID to associate with the security group"
 }
