@@ -57,12 +57,16 @@ module "cloudfront_s3" {
 module "iam" {
   source = "../iam"
 
-  prefix                 = var.core_prefix
-  environment            = var.core_environment
-  region                 = var.core_aws_region
-  account_id             = var.core_account_id
-  github_openid_role_arn = var.core_github_openid_role_arn
-  env_bucket_arn         = module.cloudfront_s3.env_bucket_arn
-  media_bucket_arn       = module.cloudfront_s3.media_bucket_arn
-  cf_distro_id           = module.cloudfront_s3.cf_distro_id
+  prefix                  = var.core_prefix
+  environment             = var.core_environment
+  region                  = var.core_aws_region
+  account_id              = var.core_account_id
+  ecr_repo_name           = var.core_ecr_repo_name
+  github_openid_role_name = var.core_github_openid_role_name
+  migrate_task_name       = var.core_migrate_task_name
+  api_cluster_name        = var.core_api_cluster_name
+  env_bucket_arn          = module.cloudfront_s3.env_bucket_arn
+  media_bucket_arn        = module.cloudfront_s3.media_bucket_arn
+  staticfiles_bucket_arn  = module.cloudfront_s3.staticfiles_bucket_arn
+  cf_distro_id            = module.cloudfront_s3.cf_distro_id
 }

@@ -73,7 +73,10 @@ data "aws_iam_policy_document" "media_bucket_document" {
   }
 }
 
-# Used inline in the cloudfront invalidation policy
+
+
+# ------ Documents used for Policies attached to Github Actions OpenID Role ------
+
 data "aws_iam_policy_document" "cf_invalidation_document" {
   statement {
     actions = [
@@ -81,6 +84,78 @@ data "aws_iam_policy_document" "cf_invalidation_document" {
     ]
     resources = [
       "arn:aws:cloudfront::${var.account_id}:distribution/${var.cf_distro_id}",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "ecr_push_document" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:DescribeRepositories",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+    ]
+    resources = [
+      "arn:aws:ecr:${var.region}:${var.account_id}:repository/${var.prefix}_${var.ecr_repo_name}_${var.environment}",
+      "arn:aws:ecr:${var.region}:${var.account_id}:repository/${var.prefix}_${var.ecr_repo_name}_${var.environment}/*",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "run_migration_task_document" {
+  statement {
+    actions = [
+      "ecs:DescribeTaskDefinition",
+      "ecs:DescribeTasks",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
+      "ecs:RunTask",
+    ]
+    resources = [
+      "arn:aws:ecs:${var.region}:${var.account_id}:task-definition/${var.prefix}_${var.migrate_task_name}_${var.environment}:*",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "update_cluster_service_document" {
+  statement {
+    actions = [
+      "ecs:UpdateService",
+    ]
+    resources = [
+      "arn:aws:ecs:${var.region}:${var.account_id}:service/${var.prefix}-${var.api_cluster_name}-${var.environment}",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "bucket_push_document" {
+  statement {
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
+      "s3:ListBucket",
+    ]
+    resources = [
+      "${var.env_bucket_arn}",
+      "${var.env_bucket_arn}/*",
+      "${var.staticfiles_bucket_arn}",
+      "${var.staticfiles_bucket_arn}/*",
     ]
   }
 }

@@ -17,7 +17,22 @@ variable "env_custom_cf_header_value" {
   description = "The value of the custom cloudfront header (env/tfvars)"
 }
 
-variable "env_github_openid_role_arn" {
+variable "env_github_openid_role_name" {
   type        = string
   description = "The github openid role arn (env/tfvars)"
+}
+
+variable "env_ecr_repo_name" {
+  type        = string
+  description = "The ecr repo name (env/tfvars)"
+}
+
+variable "env_migrate_task_name" {
+  type        = string
+  description = "The name of the migration task (env/tfvars)"
+}
+
+variable "env_api_cluster_name" {
+  type        = string
+  description = "The name of the API cluster (env/tfvars)"
 }

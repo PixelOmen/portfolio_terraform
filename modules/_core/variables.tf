@@ -52,7 +52,22 @@ variable "core_custom_cf_header_value" {
   description = "The value of the custom header cloudfront header"
 }
 
-variable "core_github_openid_role_arn" {
+variable "core_github_openid_role_name" {
   type        = string
-  description = "The ARN of the GitHub OpenID Connect role"
+  description = "The name of the GitHub OpenID Connect role"
+}
+
+variable "core_ecr_repo_name" {
+  type        = string
+  description = "The ECR repository name"
+}
+
+variable "core_migrate_task_name" {
+  type        = string
+  description = "The name of the migration task"
+}
+
+variable "core_api_cluster_name" {
+  type        = string
+  description = "The name of the API cluster"
 }
