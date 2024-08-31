@@ -1,3 +1,7 @@
+variable "core_account_id" {
+  type        = string
+  description = "The target AWS account ID"
+}
 variable "core_prefix" {
   type        = string
   description = "The prefix to apply to all resources"
@@ -46,4 +50,9 @@ variable "core_custom_cf_header_name" {
 variable "core_custom_cf_header_value" {
   type        = string
   description = "The value of the custom header cloudfront header"
+}
+
+variable "core_github_openid_role_arn" {
+  type        = string
+  description = "The ARN of the GitHub OpenID Connect role"
 }
