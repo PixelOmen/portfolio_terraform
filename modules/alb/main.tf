@@ -1,3 +1,4 @@
+
 resource "aws_lb_target_group" "django_api_tg" {
   name        = "${var.prefix}-django-api-tg-${var.environment}"
   target_type = "ip"

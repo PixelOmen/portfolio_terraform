@@ -32,3 +32,8 @@ variable "github_openid_role_arn" {
   type        = string
   description = "The ARN of the GitHub OpenID Connect role"
 }
+
+variable "cf_distro_id" {
+  type        = string
+  description = "The ID of the CloudFront distribution"
+}

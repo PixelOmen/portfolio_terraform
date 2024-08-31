@@ -1,15 +1,3 @@
-module "iam" {
-  source = "../iam"
-
-  prefix                 = var.core_prefix
-  environment            = var.core_environment
-  region                 = var.core_aws_region
-  account_id             = var.core_account_id
-  github_openid_role_arn = var.core_github_openid_role_arn
-  env_bucket_arn         = module.cloudfront_s3.env_bucket_arn
-  media_bucket_arn       = module.cloudfront_s3.media_bucket_arn
-}
-
 module "ssl_certs" {
   source = "../ssl_certs"
 
@@ -41,8 +29,8 @@ module "security_groups" {
   vpc_id      = module.vpc.main_vpc.id
 }
 
-module "ecs_alb" {
-  source = "../ecs_alb"
+module "alb_module" {
+  source = "../alb"
 
   prefix                 = var.core_prefix
   environment            = var.core_environment
@@ -61,7 +49,20 @@ module "cloudfront_s3" {
   environment         = var.core_environment
   cf_aliases          = var.core_cf_aliases
   cf_acm_cert_arn     = module.ssl_certs.acm_cf_cert.arn
-  alb_dns_name        = module.ecs_alb.alb.dns_name
+  alb_dns_name        = module.alb_module.alb.dns_name
   custom_header_name  = var.core_custom_cf_header_name
   custom_header_value = var.core_custom_cf_header_value
+}
+
+module "iam" {
+  source = "../iam"
+
+  prefix                 = var.core_prefix
+  environment            = var.core_environment
+  region                 = var.core_aws_region
+  account_id             = var.core_account_id
+  github_openid_role_arn = var.core_github_openid_role_arn
+  env_bucket_arn         = module.cloudfront_s3.env_bucket_arn
+  media_bucket_arn       = module.cloudfront_s3.media_bucket_arn
+  cf_distro_id           = module.cloudfront_s3.cf_distro_id
 }

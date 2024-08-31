@@ -72,3 +72,15 @@ data "aws_iam_policy_document" "media_bucket_document" {
     ]
   }
 }
+
+# Used inline in the cloudfront invalidation policy
+data "aws_iam_policy_document" "cf_invalidation_document" {
+  statement {
+    actions = [
+      "cloudfront:CreateInvalidation",
+    ]
+    resources = [
+      "arn:aws:cloudfront::${var.account_id}:distribution/${var.cf_distro_id}",
+    ]
+  }
+}
