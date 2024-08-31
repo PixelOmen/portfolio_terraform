@@ -52,7 +52,6 @@ resource "aws_cloudfront_origin_access_control" "staticfiles_oac" {
 
 resource "aws_cloudfront_distribution" "cf_distro" {
   enabled             = true
-  retain_on_delete    = true
   comment             = "${var.prefix}-cf-distro-${var.environment}"
   aliases             = var.cf_aliases
   default_root_object = "index.html"
