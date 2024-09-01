@@ -70,3 +70,21 @@ module "iam" {
   staticfiles_bucket_arn  = module.cloudfront_s3.staticfiles_bucket_arn
   cf_distro_id            = module.cloudfront_s3.cf_distro_id
 }
+
+module "ecs" {
+  source = "../ecs"
+
+  prefix                 = var.core_prefix
+  environment            = var.core_environment
+  region                 = var.core_aws_region
+  account_id             = var.core_account_id
+  ecr_repo_name          = var.core_ecr_repo_name
+  migrate_task_name      = var.core_migrate_task_name
+  api_cluster_name       = var.core_api_cluster_name
+  env_filename           = var.core_env_filename
+  DJANGO_SETTINGS_MODULE = var.core_DJANGO_SETTINGS_MODULE
+  django_api_tg_arn      = module.alb_module.django_api_tg.arn
+  execution_role_arn     = module.iam.execution_role.arn
+  task_role_arn          = module.iam.task_role.arn
+  env_bucket_arn         = module.cloudfront_s3.env_bucket_arn
+}

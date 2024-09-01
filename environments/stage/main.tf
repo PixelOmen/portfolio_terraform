@@ -8,6 +8,7 @@ module "core_infra" {
   core_ssl_cert_path_body        = "../../certs/body.cert.pem"
   core_ssl_cert_path_private_key = "../../certs/private.key.pem"
   core_ssl_cert_path_chain       = "../../certs/chain.crt"
+  core_DJANGO_SETTINGS_MODULE    = "portfolio_api.settings.stage"
   core_account_id                = var.env_account_id
   core_cf_aliases                = var.env_cf_stage_aliases
   core_custom_cf_header_name     = var.env_custom_cf_header_name

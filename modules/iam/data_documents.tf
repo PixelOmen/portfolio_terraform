@@ -75,8 +75,7 @@ data "aws_iam_policy_document" "media_bucket_document" {
 
 
 
-# ------ Documents used for Policies attached to Github Actions OpenID Role ------
-
+# ------ Document used for policy attached to Github Actions OpenID Role ------
 data "aws_iam_policy_document" "github_openid_role_document" {
 
   statement {

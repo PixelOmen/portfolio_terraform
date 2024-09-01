@@ -71,3 +71,8 @@ variable "core_api_cluster_name" {
   type        = string
   description = "The name of the API cluster"
 }
+
+variable "core_DJANGO_SETTINGS_MODULE" {
+  type        = string
+  description = "The Django settings module"
+}
