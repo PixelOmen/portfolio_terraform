@@ -51,9 +51,7 @@ data "aws_iam_policy_document" "ecs_tasks_execution_document" {
       "logs:DescribeLogStreams",
       "logs:PutLogEvents",
     ]
-    resources = [
-      "arn:aws:logs:${var.region}:${var.account_id}:log-group:${var.prefix}/${var.environment}/ecs/*:*",
-    ]
+    resources = ["*"]
   }
 }
 
