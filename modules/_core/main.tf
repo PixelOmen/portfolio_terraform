@@ -74,6 +74,12 @@ module "iam" {
 module "ecs" {
   source = "../ecs"
 
+  depends_on = [
+    module.alb_module.alb,
+    module.iam.execution_role,
+    module.iam.task_role
+  ]
+
   prefix                 = var.core_prefix
   environment            = var.core_environment
   region                 = var.core_aws_region
@@ -87,4 +93,7 @@ module "ecs" {
   execution_role_arn     = module.iam.execution_role.arn
   task_role_arn          = module.iam.task_role.arn
   env_bucket_arn         = module.cloudfront_s3.env_bucket_arn
+  api_sg_id              = module.security_groups.api_sg.id
+  rds_sg_id              = module.security_groups.rds_sg.id
+  private_subnet_ids     = module.vpc.private_subnet_ids
 }

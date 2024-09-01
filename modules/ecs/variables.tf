@@ -63,4 +63,17 @@ variable "DJANGO_SETTINGS_MODULE" {
   description = "The Django settings module"
 }
 
+variable "api_sg_id" {
+  type        = string
+  description = "The ID of the API security group"
+}
 
+variable "rds_sg_id" {
+  type        = string
+  description = "The ID of the RDS security group"
+}
+
+variable "private_subnet_ids" {
+  type        = list(string)
+  description = "The IDs of the private subnets"
+}

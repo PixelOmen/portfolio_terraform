@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "redis_task_definition" {
         {
             "name": "redis",
             "image": "redis:7.4-alpine",
-            "cpu": 128,
+            "cpu": 256,
             "memory": 2048,
             "portMappings": [
                 {

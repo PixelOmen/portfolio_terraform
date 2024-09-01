@@ -24,15 +24,15 @@ variable "env_github_openid_role_name" {
 
 variable "env_ecr_repo_name" {
   type        = string
-  description = "The ecr repo name (env/tfvars)"
+  description = "The ecr repo name, without prefix/env (env/tfvars)"
 }
 
 variable "env_migrate_task_name" {
   type        = string
-  description = "The name of the migration task (env/tfvars)"
+  description = "The name of the migration task, without prefix/env (env/tfvars)"
 }
 
 variable "env_api_cluster_name" {
   type        = string
-  description = "The name of the API cluster (env/tfvars)"
+  description = "The name of the API cluster, without prefix/env (env/tfvars)"
 }
