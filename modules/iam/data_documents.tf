@@ -77,7 +77,22 @@ data "aws_iam_policy_document" "media_bucket_document" {
 
 # ------ Documents used for Policies attached to Github Actions OpenID Role ------
 
-data "aws_iam_policy_document" "cf_invalidation_document" {
+data "aws_iam_policy_document" "github_openid_role_document" {
+
+  statement {
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
+      "s3:ListBucket",
+    ]
+    resources = [
+      "${var.env_bucket_arn}",
+      "${var.env_bucket_arn}/*",
+      "${var.staticfiles_bucket_arn}",
+      "${var.staticfiles_bucket_arn}/*",
+    ]
+  }
   statement {
     actions = [
       "cloudfront:CreateInvalidation",
@@ -86,9 +101,7 @@ data "aws_iam_policy_document" "cf_invalidation_document" {
       "arn:aws:cloudfront::${var.account_id}:distribution/${var.cf_distro_id}",
     ]
   }
-}
 
-data "aws_iam_policy_document" "ecr_push_document" {
   statement {
     actions = [
       "ecr:GetAuthorizationToken",
@@ -111,9 +124,7 @@ data "aws_iam_policy_document" "ecr_push_document" {
       "arn:aws:ecr:${var.region}:${var.account_id}:repository/${var.prefix}_${var.ecr_repo_name}_${var.environment}/*",
     ]
   }
-}
 
-data "aws_iam_policy_document" "run_migration_task_document" {
   statement {
     actions = [
       "ecs:DescribeTaskDefinition",
@@ -130,9 +141,7 @@ data "aws_iam_policy_document" "run_migration_task_document" {
       "arn:aws:ecs:${var.region}:${var.account_id}:task-definition/${var.prefix}_${var.migrate_task_name}_${var.environment}:*",
     ]
   }
-}
 
-data "aws_iam_policy_document" "update_cluster_service_document" {
   statement {
     actions = [
       "ecs:UpdateService",
@@ -141,21 +150,5 @@ data "aws_iam_policy_document" "update_cluster_service_document" {
       "arn:aws:ecs:${var.region}:${var.account_id}:service/${var.prefix}-${var.api_cluster_name}-${var.environment}",
     ]
   }
-}
 
-data "aws_iam_policy_document" "bucket_push_document" {
-  statement {
-    actions = [
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:ListBucket",
-    ]
-    resources = [
-      "${var.env_bucket_arn}",
-      "${var.env_bucket_arn}/*",
-      "${var.staticfiles_bucket_arn}",
-      "${var.staticfiles_bucket_arn}/*",
-    ]
-  }
 }
