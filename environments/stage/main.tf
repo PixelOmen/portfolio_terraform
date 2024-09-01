@@ -17,6 +17,9 @@ module "core_infra" {
   core_ecr_repo_name             = var.env_ecr_repo_name
   core_migrate_task_name         = var.env_migrate_task_name
   core_api_cluster_name          = var.env_api_cluster_name
+  core_rds_username              = var.env_rds_username
+  core_rds_password              = var.env_rds_password
+  core_rds_db_name               = var.env_rds_db_name
 
   providers = {
     aws             = aws

@@ -76,3 +76,18 @@ variable "core_DJANGO_SETTINGS_MODULE" {
   type        = string
   description = "The Django settings module"
 }
+
+variable "core_rds_username" {
+  type        = string
+  description = "The RDS username"
+}
+
+variable "core_rds_password" {
+  type        = string
+  description = "The RDS password"
+}
+
+variable "core_rds_db_name" {
+  type        = string
+  description = "The RDS database name"
+}

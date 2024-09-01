@@ -29,6 +29,19 @@ module "security_groups" {
   vpc_id      = module.vpc.main_vpc.id
 }
 
+module "rds" {
+  source = "../rds"
+
+  prefix             = var.core_prefix
+  environment        = var.core_environment
+  region             = var.core_aws_region
+  rds_sg_id          = module.security_groups.rds_sg.id
+  private_subnet_ids = module.vpc.private_subnet_ids
+  rds_username       = var.core_rds_username
+  rds_password       = var.core_rds_password
+  rds_db_name        = var.core_rds_db_name
+}
+
 module "alb_module" {
   source = "../alb"
 

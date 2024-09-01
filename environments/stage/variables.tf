@@ -36,3 +36,18 @@ variable "env_api_cluster_name" {
   type        = string
   description = "The name of the API cluster, without prefix/env (env/tfvars)"
 }
+
+variable "env_rds_username" {
+  type        = string
+  description = "The RDS username (env/tfvars)"
+}
+
+variable "env_rds_password" {
+  type        = string
+  description = "The RDS password (env/tfvars)"
+}
+
+variable "env_rds_db_name" {
+  type        = string
+  description = "The RDS database name (env/tfvars)"
+}
