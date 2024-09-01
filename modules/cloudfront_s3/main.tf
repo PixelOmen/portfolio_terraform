@@ -6,6 +6,7 @@ locals {
   static_origin_id = "${var.prefix}-staticfiles-bucket-${var.environment}-origin"
   alb_origin_id    = "${var.prefix}-alb-${var.environment}-origin"
 }
+
 resource "aws_s3_bucket" "env_bucket" {
   bucket        = local.env_bucket
   force_destroy = true
@@ -26,6 +27,11 @@ resource "aws_s3_bucket" "media_bucket" {
   }
 }
 
+resource "aws_s3_bucket_policy" "media_bucket_policy" {
+  bucket = aws_s3_bucket.media_bucket.bucket
+  policy = data.aws_iam_policy_document.media_bucket_cloudfront_policy.json
+}
+
 resource "aws_s3_bucket" "staticfiles_bucket" {
   bucket        = local.static_bucket
   force_destroy = true
@@ -35,6 +41,13 @@ resource "aws_s3_bucket" "staticfiles_bucket" {
     Environment = var.environment
   }
 }
+
+resource "aws_s3_bucket_policy" "staticfiles_bucket_policy" {
+  bucket = aws_s3_bucket.staticfiles_bucket.bucket
+  policy = data.aws_iam_policy_document.staticfiles_bucket_cloudfront_policy.json
+}
+
+
 
 resource "aws_cloudfront_origin_access_control" "media_oac" {
   name                              = "${var.prefix}-media-oac-${var.environment}"
