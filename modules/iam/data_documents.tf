@@ -155,7 +155,7 @@ data "aws_iam_policy_document" "github_openid_role_document" {
       "ecs:UpdateService",
     ]
     resources = [
-      "arn:aws:ecs:${var.region}:${var.account_id}:service/${var.prefix}-${var.api_cluster_name}-${var.environment}",
+      "arn:aws:ecs:${var.region}:${var.account_id}:service/${var.prefix}-*-${var.environment}",
     ]
   }
 
