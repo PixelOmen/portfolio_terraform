@@ -15,7 +15,7 @@ resource "aws_db_instance" "main_db_instance" {
   publicly_accessible     = false
   backup_retention_period = 7
 
-  identifier            = "${var.prefix}-db-${var.environment}"
+  identifier            = "${var.prefix}-rds-postgres-${var.environment}"
   allocated_storage     = 20
   max_allocated_storage = 100
   storage_type          = "gp3"
@@ -28,7 +28,7 @@ resource "aws_db_instance" "main_db_instance" {
   db_subnet_group_name  = aws_db_subnet_group.main_db_subnet_group.name
 
   tags = {
-    Name        = "${var.prefix}-rds-${var.environment}"
+    Name        = "${var.prefix}-rds-postgres-${var.environment}"
     environment = var.environment
   }
 }

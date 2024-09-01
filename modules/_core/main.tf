@@ -102,6 +102,7 @@ module "ecs" {
   api_cluster_name       = var.core_api_cluster_name
   env_filename           = var.core_env_filename
   DJANGO_SETTINGS_MODULE = var.core_DJANGO_SETTINGS_MODULE
+  vpc_id                 = module.vpc.main_vpc.id
   django_api_tg_arn      = module.alb_module.django_api_tg.arn
   execution_role_arn     = module.iam.execution_role.arn
   task_role_arn          = module.iam.task_role.arn

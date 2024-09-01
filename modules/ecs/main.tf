@@ -6,8 +6,16 @@ locals {
   redis_service_port_name = "ecs-service-redis"
 }
 
+resource "aws_service_discovery_private_dns_namespace" "cluster_service_namespace" {
+  name = local.full_cluster_name
+  vpc  = var.vpc_id
+}
+
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = local.full_cluster_name
+  service_connect_defaults {
+    namespace = aws_service_discovery_private_dns_namespace.cluster_service_namespace.arn
+  }
 
   tags = {
     Name        = local.full_cluster_name
@@ -20,7 +28,6 @@ resource "aws_ecs_service" "redis_service" {
   cluster         = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.redis_task_definition.arn
   desired_count   = 1
-  launch_type     = "FARGATE"
 
   network_configuration {
     subnets          = var.private_subnet_ids
@@ -61,7 +68,6 @@ resource "aws_ecs_service" "django_api_service" {
   cluster                           = aws_ecs_cluster.ecs_cluster.arn
   task_definition                   = aws_ecs_task_definition.api_task_definition.arn
   desired_count                     = 1
-  launch_type                       = "FARGATE"
   health_check_grace_period_seconds = 60
 
   network_configuration {
@@ -101,7 +107,6 @@ resource "aws_ecs_service" "celery_beat_service" {
   cluster         = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.celery-beat_task_definition.arn
   desired_count   = 1
-  launch_type     = "FARGATE"
 
   network_configuration {
     subnets         = var.private_subnet_ids
@@ -129,7 +134,6 @@ resource "aws_ecs_service" "celery_worker_service" {
   cluster         = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.celery-worker_task_definition.arn
   desired_count   = 1
-  launch_type     = "FARGATE"
 
   network_configuration {
     subnets         = var.private_subnet_ids

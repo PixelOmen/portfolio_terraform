@@ -13,3 +13,7 @@ output "staticfiles_bucket_arn" {
 output "cf_distro_id" {
   value = aws_cloudfront_distribution.cf_distro.id
 }
+
+output "cf_domain_name" {
+  value = aws_cloudfront_distribution.cf_distro.domain_name
+}

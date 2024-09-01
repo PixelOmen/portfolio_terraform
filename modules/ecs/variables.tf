@@ -18,6 +18,11 @@ variable "account_id" {
   description = "The target AWS account ID"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "The ID of the VPC"
+}
+
 variable "api_cluster_name" {
   type        = string
   description = "The name of the API cluster"

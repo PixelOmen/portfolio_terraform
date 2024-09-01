@@ -143,6 +143,17 @@ data "aws_iam_policy_document" "github_openid_role_document" {
 
   statement {
     actions = [
+      "iam:PassRole",
+    ]
+
+    resources = [
+      aws_iam_role.ecs_task_execution_role.arn,
+      aws_iam_role.django_api_task_role.arn,
+    ]
+  }
+
+  statement {
+    actions = [
       "ecs:UpdateService",
     ]
     resources = [
