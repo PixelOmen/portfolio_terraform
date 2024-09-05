@@ -69,7 +69,7 @@ resource "aws_ecs_task_definition" "api_task_definition" {
             "command": [
                 "sh",
                 "-c",
-                "gunicorn portfolio_api.wsgi:application --bind 0.0.0.0:8000"
+                "gunicorn -k uvicorn.workers.UvicornWorker portfolio_api.asgi:application --bind 0.0.0.0:8000 --workers 3"
             ],
             "environment": [
                 {
