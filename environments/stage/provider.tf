@@ -19,7 +19,7 @@ terraform {
 
   backend "s3" {
     bucket = "eaportfolio-terraform-state-bucket"
-    key    = "prod/terraform.tfstate"
+    key    = "stage/terraform.tfstate"
     region = "us-west-2"
   }
 }
