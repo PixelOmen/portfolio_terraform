@@ -4,7 +4,7 @@ resource "aws_db_subnet_group" "main_db_subnet_group" {
 
   tags = {
     Name        = "${var.prefix}-db-subnet-group-${var.environment}"
-    environment = var.environment
+    Environment = var.environment
   }
 }
 
@@ -30,6 +30,6 @@ resource "aws_db_instance" "main_db_instance" {
 
   tags = {
     Name        = "${var.prefix}-rds-postgres-${var.environment}"
-    environment = var.environment
+    Environment = var.environment
   }
 }
